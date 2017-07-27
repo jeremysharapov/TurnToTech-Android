@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <!-- The android:onClick tag specifies the name of a
+         function to call when the view is clicked.
+         This function must have a View as a parameter. -->
+  <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/frag_btn1"
+        android:onClick="selectFrag" />
+
+    <Button
+         android:id="@+id/button2"
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:onClick="selectFrag"
+         android:text="@string/frag_btn2" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:onClick="selectFrag"
+        android:text="@string/frag_btn3" />
+
+    <!-- TODO: Create another button to navigate to your new Fragment -->
+
+  <FrameLayout
+    android:id="@+id/fragment_container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" />
+    
+ 
+    
+</LinearLayout>
+
+ 

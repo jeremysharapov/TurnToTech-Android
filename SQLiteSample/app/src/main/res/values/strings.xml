@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SQLite Sample</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="lbl_name">Name</string>
+    <string name="btn_add">Add</string>
+    <string name="btn_del">Delete</string>
+    
+</resources>

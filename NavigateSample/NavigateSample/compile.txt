@@ -1,0 +1,2 @@
+files=MainActivity.java,ChildActivity.java,CustomListAdapter.java,DetailActivity.java,strings.xml,row_layout.xml,activity_web.xml
+type=android

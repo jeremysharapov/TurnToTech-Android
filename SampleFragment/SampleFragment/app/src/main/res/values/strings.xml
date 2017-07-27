@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">SampleFragment</string>
+    <string name="action_settings">Settings</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="frag_btn1">Fragment 1</string>
+    <string name="frag_btn2">Fragment 2</string>
+    <string name="frag_btn3">Fragment 3</string>
+    <string name="frag_desc1">This is fragment No.1</string>
+    <string name="frag_desc2">This is fragment No.2</string>
+    <string name="frag_desc3">This is fragment No.3</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+</resources>

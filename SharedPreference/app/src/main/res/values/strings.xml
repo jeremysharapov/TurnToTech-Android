@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Shared Preference</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="radio_green">Green</string>
+    <string name="radio_red">Red</string>
+    <string name="radio_blue">Blue</string>
+       
+</resources>

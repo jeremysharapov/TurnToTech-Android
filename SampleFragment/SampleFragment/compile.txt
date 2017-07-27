@@ -1,0 +1,2 @@
+files=MainActivity.java,AndroidManifest.xml,FragmentOne.java,fragment_one.xml,FragmentTwo.java,fragment_two.xml,YourFragment.java,fragment_your.xml,activity_main.xml,strings.xml
+type=android

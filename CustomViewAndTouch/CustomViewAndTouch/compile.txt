@@ -1,0 +1,2 @@
+files=MainActivity.java,MyExtendedView.java
+type=android
