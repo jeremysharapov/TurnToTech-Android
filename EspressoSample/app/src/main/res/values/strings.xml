@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">EspressoSample</string>
+    <string name="hello_world">Title</string>
+    <string name="change">Change Title</string>
+    <string name="type_here">Enter your Name…</string>
+    <string name="go_to_detail">Go to Details</string>
+    <string name="type_bio">Tell us about you!! Something interesting.. </string>
+</resources>

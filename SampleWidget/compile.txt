@@ -1,0 +1,2 @@
+files=MainActivity.java,AndroidManifest.xml,activity_main.xml,AlarmManagerBroadcastReceiver.java,strings.xml
+type=android

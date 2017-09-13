@@ -1,15 +1,24 @@
 package com.example.jeremy.parentleash;
 
+import android.*;
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.support.annotation.MainThread;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
 
 import org.json.JSONObject;
 
@@ -24,11 +33,15 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
 
     static EditText username, latitude, longitude, radius;
     static String json_url;
     static String Username, Latitude, Longitude, Radius;
+    double lat;
+    double lon;
+    private GoogleApiClient googleApiClient;
+    private static final int MY_PERMISSION_ACCESS_COURSE_LOCATION = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +51,66 @@ public class MainActivity extends AppCompatActivity {
         latitude = (EditText) findViewById(R.id.Latitude);
         longitude = (EditText) findViewById(R.id.Longitude);
         radius = (EditText) findViewById(R.id.Radius);
+
+        googleApiClient = new GoogleApiClient.Builder(this, this, this).addApi(LocationServices.API).build();
+        googleApiClient.connect();
+
+        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, new String[] { android.Manifest.permission.ACCESS_COARSE_LOCATION },
+                    MY_PERMISSION_ACCESS_COURSE_LOCATION);
+        }
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+        switch (requestCode) {
+            case MY_PERMISSION_ACCESS_COURSE_LOCATION: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "All good", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Need your location!", Toast.LENGTH_SHORT).show();
+                }
+                break;
+            }
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (googleApiClient != null) {
+            googleApiClient.connect();
+        }
+    }
+
+    @Override
+    protected void onStop() {
+        googleApiClient.disconnect();
+        super.onStop();
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        Log.i(MainActivity.class.getSimpleName(), "Connected to Google Play Services!");
+
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            Location lastLocation = LocationServices.FusedLocationApi.getLastLocation(googleApiClient);
+
+            lat = lastLocation.getLatitude();
+            lon = lastLocation.getLongitude();
+        }
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.i(MainActivity.class.getSimpleName(), "Can't connect to Google Play Services!");
+    }
+
 
     public void createProfile(View view) {
         Username = username.getText().toString();
@@ -121,6 +193,17 @@ public class MainActivity extends AppCompatActivity {
         new GetUpdate().execute(json_url);
     }
 
+    public void UpdateGPS(View view){
+        Username = username.getText().toString();
+        Latitude = String.valueOf(lat);
+        latitude.setText(Latitude);
+        Longitude = String.valueOf(lon);
+        longitude.setText(Longitude);
+        Radius = radius.getText().toString();
+        json_url = "https://turntotech.firebaseio.com/digitalleash/" + Username + ".json";
+        new GetUpdate().execute(json_url);
+    }
+
     public class GetUpdate extends AsyncTask<String, String, Void> {
 
         HttpURLConnection urlConnection, urlConnectionUpdate;
@@ -195,17 +278,17 @@ public class MainActivity extends AppCompatActivity {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(in));
                 String line = reader.readLine();
                 JSONObject json = new JSONObject(line);
-                int childLat = Integer.parseInt(json.getString("childLatitude"));
-                int childLong = Integer.parseInt(json.getString("childLongitude"));
+                double childLat = Double.parseDouble(json.getString("childLatitude"));
+                double childLong = Double.parseDouble(json.getString("childLongitude"));
                 Location parent = new Location("");
-                int parLat = Integer.parseInt(json.getString("latitude"));
-                int cparLong = Integer.parseInt(json.getString("longitude"));
+                double parLat = Double.parseDouble(json.getString("latitude"));
+                double cparLong = Double.parseDouble(json.getString("longitude"));
                 parent.setLatitude(parLat);
                 parent.setLongitude(cparLong);
                 Location child = new Location("");
                 child.setLatitude(childLat);
                 child.setLongitude(childLong);
-                if (parent.distanceTo(child) > Integer.parseInt(json.getString("childLongitude"))) {
+                if (parent.distanceTo(child) > Integer.parseInt(json.getString("radius"))) {
                     startActivity(new Intent(MainActivity.this, OutOfRange.class));
                 } else {
                     startActivity(new Intent(MainActivity.this, InRange.class));

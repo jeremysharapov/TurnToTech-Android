@@ -11,19 +11,19 @@
     android:weightSum="1">
 
     <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:id="@+id/imageView"
-        android:layout_alignParentTop="true"
+        android:layout_width="52dp"
+        android:layout_height="78dp"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        app:srcCompat="?android:attr/textSelectHandleLeft"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_alignParentTop="true"
         android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginStart="16dp"
-        app:layout_constraintVertical_bias="0.481" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.481"
+        app:srcCompat="?android:attr/textSelectHandleLeft" />
 
     <TextView
         android:id="@+id/textProductName"
@@ -47,7 +47,7 @@
 
     <ImageView
         android:id="@+id/imageView6"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="3dp"
         android:layout_marginTop="80dp"
         app:layout_constraintHorizontal_bias="0.0"
